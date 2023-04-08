@@ -1,105 +1,22 @@
 import logo from "./logo.svg";
 import "./App.css";
+import Post from "./Post";
+import Header from "./Header";
+import { Routes, Route } from "react-router-dom";
+import Layout from "./Layout";
+import IndexPage from "./pages/IndexPage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 
 function App() {
   return (
-    <main>
-      <header>
-        <a href="" className="logo">
-          My Temple Blog
-        </a>
-        <nav>
-          <a href="" className="logo">
-            Login
-          </a>
-          <a href="" className="logo">
-            Register
-          </a>
-        </nav>
-      </header>
-
-      <div className="post">
-        <div className="image">
-          <img
-            src="https://images.pexels.com/photos/1089302/pexels-photo-1089302.jpeg?auto=compress&cs=tinysrgb&w=400&h=150&dpr=2"
-            alt=""
-          ></img>
-        </div>
-
-        <div className="content">
-          <h2>Temple from AngKor</h2>
-          <p className="info">
-            <a className="author">Aditya R</a>
-            <time>2022-04-01 15:45</time>
-          </p>
-          <p className="summary">
-            The Ta Prohm Temple (and its famous Angkor Wat tree) is one of the
-            most photogenic temples in Cambodia. It's known as the “Tomb Raider
-            temple”. Chances are you've seen pictures of this place before
-          </p>
-        </div>
-      </div>
-      <div className="post">
-        <div className="image">
-          <img
-            src="https://images.pexels.com/photos/1089302/pexels-photo-1089302.jpeg?auto=compress&cs=tinysrgb&w=400&h=150&dpr=2"
-            alt=""
-          ></img>
-        </div>
-        <div className="content">
-          <h2>Temple from AngKor</h2>
-          <p className="info">
-            <a className="author">Aditya R</a>
-            <time>2022-04-01 15:45</time>
-          </p>
-          <p className="summary">
-            The Ta Prohm Temple (and its famous Angkor Wat tree) is one of the
-            most photogenic temples in Cambodia. It's known as the “Tomb Raider
-            temple”. Chances are you've seen pictures of this place before
-          </p>
-        </div>
-      </div>
-      <div className="post">
-        <div className="image">
-          <img
-            src="https://images.pexels.com/photos/1089302/pexels-photo-1089302.jpeg?auto=compress&cs=tinysrgb&w=400&h=150&dpr=2"
-            alt=""
-          ></img>
-        </div>
-        <div className="content">
-          <h2>Temple from AngKor</h2>
-          <p className="info">
-            <a className="author">Aditya R</a>
-            <time>2022-04-01 15:45</time>
-          </p>
-          <p className="summary">
-            The Ta Prohm Temple (and its famous Angkor Wat tree) is one of the
-            most photogenic temples in Cambodia. It's known as the “Tomb Raider
-            temple”. Chances are you've seen pictures of this place before
-          </p>
-        </div>
-      </div>
-      <div className="post">
-        <div className="image">
-          <img
-            src="https://images.pexels.com/photos/1089302/pexels-photo-1089302.jpeg?auto=compress&cs=tinysrgb&w=400&h=150&dpr=2"
-            alt=""
-          ></img>
-        </div>
-        <div className="content">
-          <h2>Temple from AngKor</h2>
-          <p className="info">
-            <a className="author">Aditya R</a>
-            <time>2022-04-01 15:45</time>
-          </p>
-          <p className="summary">
-            The Ta Prohm Temple (and its famous Angkor Wat tree) is one of the
-            most photogenic temples in Cambodia. It's known as the “Tomb Raider
-            temple”. Chances are you've seen pictures of this place before
-          </p>
-        </div>
-      </div>
-    </main>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<IndexPage />} />
+        <Route path={"/login"} element={<LoginPage />} />
+        <Route path={"/register"} element={<RegisterPage />} />
+      </Route>
+    </Routes>
   );
 }
 
