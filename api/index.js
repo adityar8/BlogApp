@@ -9,10 +9,11 @@ const salt = bcrypt.genSaltSync(10);
 const secret_salt_session = "saodsad2323knkjn3432sdfdsf0090909mmb23231dffbb";
 const app = express();
 const jwt = require("jsonwebtoken");
-
-app.use(cors());
+const cookieParser = require("cookie-parser");
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(express.json());
-
+// add cookie parser, to read and validate  coookie sent from front end.
+app.use(cookieParser());
 mongoose.connect(
   "mongodb+srv://testuser:testuser123@adityacluster.uzbzzwf.mongodb.net/?retryWrites=true&w=majority"
 );
@@ -48,7 +49,10 @@ app.post("/login", async (req, res) => {
         {},
         (err, token) => {
           if (err) throw err;
-          res.cookie("token", token).json("OK");
+          res.cookie("token", token).json({
+            id: userDoc._id,
+            username,
+          });
         }
       );
     } else {
@@ -57,6 +61,19 @@ app.post("/login", async (req, res) => {
   } catch (err) {
     res.status(400).json(e);
   }
+});
+
+app.post("/logout", async (req, res) => {
+  res.cookie("token", "").json("ok");
+});
+
+// Return profile.
+app.get("/profile", (req, res) => {
+  const { token } = req.cookies;
+  jwt.verify(token, secret_salt_session, {}, (err, info) => {
+    if (err) throw err;
+    res.json(info);
+  });
 });
 
 app.listen(4000);

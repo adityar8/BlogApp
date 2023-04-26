@@ -1,22 +1,32 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { Navigate } from "react-router-dom";
+import { UserContext } from "../UserContext";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const [redirect, setRedirect] = useState(false);
+  const { setUserInfo, userInfo } = useContext(UserContext);
   async function login(ev) {
     ev.preventDefault();
-    const logindetails = await fetch("http://localhost:4000/login", {
+    const response = await fetch("http://localhost:4000/login", {
       method: "POST",
       body: JSON.stringify({ username, password }),
       headers: { "Content-Type": "application/json" },
+      credentials: "include", // Include the cookie returned from server
     });
-    console.log("Login details", logindetails);
-    if (logindetails === "success") {
-      alert("User Logged in successfully");
+    if (response.ok) {
+      response.json().then((userInfo) => {
+        setUserInfo(userInfo);
+        setRedirect(true);
+      });
     } else {
       alert("Invalid credentials");
     }
+  }
+
+  if (redirect) {
+    return <Navigate to={"/"} />;
   }
 
   return (
