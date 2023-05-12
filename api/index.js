@@ -9,6 +9,11 @@ const salt = bcrypt.genSaltSync(10);
 const secret_salt_session = "saodsad2323knkjn3432sdfdsf0090909mmb23231dffbb";
 const app = express();
 const jwt = require("jsonwebtoken");
+const multer = require("multer");
+
+// Upload the files to uploads folder in api proj
+const uploadMiddleware = multer({ dest: "uploads/" });
+
 const cookieParser = require("cookie-parser");
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(express.json());
@@ -74,6 +79,11 @@ app.get("/profile", (req, res) => {
     if (err) throw err;
     res.json(info);
   });
+});
+
+//Multer library is use to grab file from form-data ( coming from client request)
+app.post("/post", uploadMiddleware.single("file"), (req, res) => {
+  res.json({ files: req.files });
 });
 
 app.listen(4000);
