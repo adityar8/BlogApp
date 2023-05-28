@@ -41,13 +41,14 @@ export default function CreatePost() {
     data.set("title", title);
     data.set("summary", subject);
     data.set("content", content);
-
+    data.set("file", files[0]);
+    console.log("Files-", files[0]);
     ev.preventDefault();
-    const response = await fetch("http://localhost:4000/create/post", {
+    const response = await fetch("http://localhost:4000/post", {
       method: "POST",
       body: data,
     });
-    console.log("response", response);
+    console.log(await response.json());
   }
   return (
     <form onSubmit={createNewPost}>
@@ -63,7 +64,11 @@ export default function CreatePost() {
         value={subject}
         onChange={(ev) => setSubject(ev.target.value)}
       />
-      <input type="file" onChange={(ev) => setFiles(ev.target.files)} />
+      <input
+        type="file"
+        // value={files}
+        onChange={(ev) => setFiles(ev.target.files)}
+      />
       <ReactQuill
         value={content}
         onChange={(newValue) => setContent(newValue)}

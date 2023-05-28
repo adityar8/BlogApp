@@ -10,7 +10,7 @@ const secret_salt_session = "saodsad2323knkjn3432sdfdsf0090909mmb23231dffbb";
 const app = express();
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
-
+const fs = require("fs");
 // Upload the files to uploads folder in api proj
 const uploadMiddleware = multer({ dest: "uploads/" });
 
@@ -83,7 +83,13 @@ app.get("/profile", (req, res) => {
 
 //Multer library is use to grab file from form-data ( coming from client request)
 app.post("/post", uploadMiddleware.single("file"), (req, res) => {
-  res.json({ files: req.files });
+  // res.json({ files: req.file }); // 'file' in req.file is the name of the form element
+  // console.log("Inside post", req.file);
+  const { originalname, path } = req.file; // 'file' in req.file is the name of the form element coming from front end.
+  const parts = originalname.split(".");
+  const ext = parts[parts.length - 1];
+  fs.renameSync(path, path + "." + ext);
+  res.json({ ext });
 });
 
 app.listen(4000);
